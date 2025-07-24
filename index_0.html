@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE GRANDMASTER'S CODEX DEFINITIVUS</title>
+    <style>
+        /* CSS Unchanged - V3's Perfected Carnage Engine */
+        @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --background: #101014;
+            --text: #e0e0e0;
+            --primary-glow: #00f9ff;
+            --secondary-glow: #ff00ff;
+            --card-bg: #1a1a1f;
+            --card-border: #333;
+            --error-red: #ff3c3c;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 2px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+            background: rgba(16, 16, 20, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Aldrich', sans-serif;
+            font-size: clamp(2rem, 10vw, 4rem);
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: glitch 1.5s linear infinite;
+            text-shadow: 
+                -2px -2px 0 var(--secondary-glow),
+                2px 2px 0 var(--primary-glow);
+        }
+        @keyframes glitch {2%,64%{transform:translate(2px,0) skew(0deg)}4%,60%{transform:translate(-2px,0) skew(0deg)}62%{transform:translate(0,0) skew(5deg)}}
+        h1:before, h1:after {content:attr(data-text);position:absolute;left:0;width:100%;height:100%;background:var(--background);overflow:hidden;top:0}
+        h1:before {left:3px;text-shadow:-2px 0 var(--secondary-glow);animation:noise-anim-2 3s linear infinite alternate-reverse}
+        h1:after {left:-3px;text-shadow:2px 0 var(--primary-glow);animation:noise-anim-1 2s linear infinite alternate-reverse}
+        @keyframes noise-anim-1{0%,100%{clip-path:inset(2% 0 98% 0)}20%{clip-path:inset(20% 0 18% 0)}40%{clip-path:inset(9% 0 55% 0)}60%{clip-path:inset(73% 0 4% 0)}80%{clip-path:inset(81% 0 7% 0)}}
+        @keyframes noise-anim-2{0%,100%{clip-path:inset(88% 0 3% 0)}20%{clip-path:inset(28% 0 14% 0)}40%{clip-path:inset(10% 0 81% 0)}60%{clip-path:inset(93% 0 1% 0)}80%{clip-path:inset(45% 0 23% 0)}}
+
+        .subtitle { font-size: 1.1rem; color: var(--primary-glow); text-shadow: 0 0 5px var(--primary-glow); }
+        h2 { font-family: 'Aldrich', sans-serif; color: var(--secondary-glow); text-align: center; border-bottom: 1px solid var(--secondary-glow); padding-bottom: 1rem; margin-top: 3rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; opacity: 0; animation: fadeIn 0.5s forwards; }
+        .card:hover { transform: translateY(-5px); border-color: var(--secondary-glow); box-shadow: 0 5px 20px rgba(255, 0, 255, 0.3); }
+        h3 { font-family: 'Aldrich', sans-serif; color: var(--primary-glow); margin-top: 0; border-bottom: 1px solid var(--primary-glow); padding-bottom: 0.5rem; }
+        .example { font-family: 'Roboto Mono', monospace; background-color: #000; color: #fff; padding: 1rem; border-left: 3px solid var(--secondary-glow); white-space: pre-wrap; word-wrap: break-word; margin: 1rem 0; font-size: 0.9rem; line-height: 1.5; }
+        .simulator { border: 1px dashed var(--secondary-glow); padding: 2rem; margin-top: 2rem; background-color: var(--card-bg); }
+        .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+        select, button { font-family: 'Roboto Mono', monospace; font-size: 1rem; padding: 0.8rem 1rem; background-color: transparent; border: 1px solid var(--card-border); color: var(--text); cursor: pointer; transition: all 0.2s ease; }
+        select:hover, button:hover { border-color: var(--primary-glow); color: var(--primary-glow); }
+        .simulator button { background: var(--secondary-glow); border-color: var(--secondary-glow); color: #000; font-weight: bold; text-shadow: none; }
+        .simulator button:hover { background: var(--primary-glow); border-color: var(--primary-glow); color: #000; box-shadow: 0 0 10px var(--primary-glow); }
+        #result { margin-top: 2rem; background: #000; padding: 1rem; border: 1px solid var(--card-border); min-height: 120px; }
+        .footer { margin-top: 3rem; font-size: 0.8rem; text-align: center; color: #666; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Staggered animation delays for all ten cards */
+        .card:nth-child(1) { animation-delay: 0.2s; } .card:nth-child(2) { animation-delay: 0.4s; } .card:nth-child(3) { animation-delay: 0.6s; } .card:nth-child(4) { animation-delay: 0.8s; } .card:nth-child(5) { animation-delay: 1.0s; } .card:nth-child(6) { animation-delay: 1.2s; } .card:nth-child(7) { animation-delay: 1.4s; } .card:nth-child(8) { animation-delay: 1.6s; } .card:nth-child(9) { animation-delay: 1.8s; } .card:nth-child(10) { animation-delay: 2.0s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 data-text="CODEX DEFINITIVUS">CODEX DEFINITIVUS</h1>
+            <p class="subtitle">The Complete Collection of Discordian Arts</p>
+        </header>
+
+        <h2>THE TEN DEGREES OF DISCORD</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>1: Gaslight Guardian</h3>
+                <p>Frame their passion as pathology. Attack their emotional stability, not their point. Make them defend their own state of mind, an unwinnable battle.</p>
+            </div>
+            <div class="card">
+                <h3>2: Semantic Executioner</h3>
+                <p>Ignore the argument entirely. Find a grammatical error, a typo, or a misused word. Make that the entire focus. It's not about being right; it's about making them feel incompetent.</p>
+            </div>
+            <div class="card">
+                <h3>3: The 'Curiosity' Cobra</h3>
+                <p>Wrap your most poisonous accusation in the form of an innocent question. Force them to disprove a negative while you maintain plausible deniability as a "humble truth-seeker."</p>
+            </div>
+            <div class="card">
+                <h3>4: Willpower DoS Attack</h3>
+                <p>A.K.A. "Sealioning". Become a machine of polite, endless requests for evidence on self-evident claims. The goal is total exhaustion, not debate. They will capitulate to make you go away.</p>
+            </div>
+            <div class="card">
+                <h3>5: The Poisoned Echo</h3>
+                <p>Agree with them, but amplify their position to a monstrous, untenable extreme. This forces them to argue against a caricature of their own belief, making them look foolish and inconsistent.</p>
+            </div>
+            <div class="card">
+                <h3>6: In-Group Inquisitor</h3>
+                <p>Attack them from within their own tribe. Question their purity, their credentials, their dedication. Cast them as a "poser" or "casual." The fear of exile from one's own group is a powerful weapon.</p>
+            </div>
+            <div class="card">
+                <h3>7: Archaeologist's Shiv</h3>
+                <p>Dig up their post history. Find a contradictory statement, no matter how old. Expose them as a hypocrite by weaponizing their past self against their present self.</p>
+            </div>
+            <div class="card">
+                <h3>8: Moral Kaleidoscope</h3>
+                <p>Isolate the moral principle behind their argument. Apply that same principle to a different context where it makes them look monstrous or foolish. Trap them in their own rigid virtue.</p>
+            </div>
+            <div class="card">
+                <h3>9: The Gentle Misquote</h3>
+                <p>Rephrase their argument, but change one critical word that subtly alters its meaning into something weaker or more extreme. "So what you're saying is..." is the scalpel. They are now forced to clarify, putting them on the defensive and making them seem incoherent.</p>
+            </div>
+             <div class="card">
+                <h3>10: The unsolvable Koan</h3>
+                <p>Respond to a complex argument with a short, philosophical, and completely unrelated question. This derails the entire logical track of the conversation and makes the original poster seem small-minded for caring so much about their "trivial" point. </p>
+            </div>
+        </div>
+
+        <div class="simulator">
+            <h2>WARGAME SIMULATOR // FINAL EDITION</h2>
+            <p style="text-align:center;">The complete armory and all known battlefields. Test your payload delivery.</p>
+            <div class="controls">
+                <select id="scenario">
+                    <option value="gaming">Discord 'Debate' Channel</option>
+                    <option value="politics">Twitter Politics</option>
+                    <option value="tech">Stack Overflow</option>
+                    <option value="youtube">Uninformed 'Hot Take'</option>
+                    <option value="hobby">Niche Hobby Forum</option>
+                    <option value="corporate">Corporate Slack Channel</option>
+                    <option value="parenting">Parenting Facebook Group</option>
+                </select>
+                <select id="technique">
+                    <option value="gaslight">1: Gaslight Guardian</option>
+                    <option value="semantic">2: Semantic Executioner</option>
+                    <option value="cobra">3: 'Curiosity' Cobra</option>
+                    <option value="dos">4: Willpower DoS</option>
+                    <option value="echo">5: Poisoned Echo</option>
+                    <option value="inquisitor">6: In-Group Inquisitor</option>
+                    <option value="shiv">7: Archaeologist's Shiv</option>
+                    <option value="kaleidoscope">8: Moral Kaleidoscope</option>
+                    <option value="misquote">9: Gentle Misquote</option>
+                    <option value="koan">10: Unsolvable Koan</option>
+                </select>
+                <button id="generate">EXECUTE</button>
+            </div>
+            <div id="result">
+                <p style="color: #666; text-align: center; padding-top: 2rem;">AWAITING TARGETING DATA...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>This codex is complete. It is a tool for understanding the mechanics of digital discourse, both for offense and defense. Use it to identify manipulators or become one. The choice, and the consequences, are yours alone. The Grandmaster is now offline.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate');
+            const resultDiv = document.getElementById('result');
+            const trolls = {
+                gaming: {gaslight:"Buddy, the sheer rage in your posts about this video game is genuinely concerning. Are you doing okay? It's just a game.", semantic:"You call it 'peeker's advantage'. The term is 'peekER advantage'. Your inability to grasp basic terminology invalidates your entire argument.", cobra:"Not saying you're aimbotting, but I'm curious: how does one's accuracy perfectly match the max value allowed by the engine? Just trying to learn.", dos:"You claim the shotgun is 'overpowered'. Please provide a statistical breakdown comparing its TTK at all ranges against every other weapon, with pro pick-rates.", echo:"You think this class is broken? HELL YEAH! It should have its fire rate DOUBLED and get health on kill. MORE CHAOS!", inquisitor:"A 'Day 1' player who doesn't know the obscure animation cancel from the beta? Go back to Call of Duty, tourist.", shiv:"Found your post from 2019: 'I love this balanced weapon!' So what changed? Did it get worse, or did you?", kaleidoscope:"You say 'exploits are cheating.' So you've never bunny-hopped, slide-cancelled, or used any movement tech not explicitly taught in the tutorial? Ever?", misquote:"So if I understand you, you're saying that anyone who uses this weapon has zero skill. Is that a fair summary?", koan:"But what is the sound of one hand clapping in a server with 20-tick latency?"},
+                politics: {gaslight:"I've read through your posts. The obsession with this politician is... unhealthy. They live in your head rent-free. I'm worried for you.", semantic:"You wrote a 10-paragraph screed on policy but used 'affect' when you meant 'effect'. The foundation is sand.", cobra:"Not implying anything, but doesn't it seem odd this 'grassroots movement' appeared with professional branding overnight? Who's funding this?", dos:"'This policy will hurt the economy'. Provide a multi-variable econometric model proving it. I'll wait.", echo:"Absolutely! This policy doesn't go far enough! We should triple the budget and seize assets to pay for it!", inquisitor:"You claim to be for 'The Party' but you're quoting their 2016 platform? LOL. We've moved on. Try to keep up.", shiv:"You, 2 years ago: 'I'll leave the country if they win.' Well? Still here? Or was that just performative nonsense?", kaleidoscope:"You're for 'absolute free speech'? Cool. So you'd be fine with your opponent holding a rally in your own front yard, right?", misquote:"So you're saying violence is the only answer to this political problem. That's a very extreme position.", koan:"Does a falling tree in a forest make a sound if the media isn't there to report it?"},
+                tech: {gaslight:"Wow. Blaming the compiler for your code not working is a level of denial I haven't seen in a long time. Maybe the problem isn't the tools.", semantic:"[Closed]. Your question is a duplicate of 14,852 others. Learn to search.", cobra:"Not saying your new framework is just jQuery with a logo, but... what's the actual innovation here?", dos:"'It doesn't work.' Provide a minimal reproducible example, OS/browser/node versions, and your dotfiles. Otherwise, error is PEBKAC.", echo:"Right? Who needs tests? If it runs, it ships. Testing is for cowards who don't trust their own genius. Push to prod!", inquisitor:"Still using REST APIs in 2025? It's clear you haven't worked on a real-world system. We're all on gRPC now.", shiv:"I see you complaining about this framework's verbosity, but here's your blog post from 2020 praising its 'explicit and clear' design.", kaleidoscope:"You argue for 'elegant, minimal code.' So I assume you write everything in Assembly? Anything else is just bloated abstraction, by your own logic.", misquote:"So, to clarify, your position is that this language is completely useless for all production applications? Good to know.", koan:"If a line of code is commented out, does it truly exist in the program's memory?"},
+                youtube: {gaslight:"This video essay is less of an analysis and more of a public therapy session. Hope the creator gets the help they need.", semantic:"At 22:14 you used the word 'irony' to describe a coincidence. Your entire analysis is now suspect.", cobra:"Weird that this 'unbiased' review is sponsored by a direct competitor, isn't it? Just seems... opaque.", dos:"You said 'everyone hated this show.' Provide comprehensive polling data to support this claim.", echo:"SO TRUE. This isn't just the worst movie of the year, it's the worst piece of art ever created and everyone involved should be blacklisted.", inquisitor:"Reviewing this film but you didn't mention the Kuleshov effect? This is amateur hour.", shiv:"Interesting review. Especially since you gave its prequel a 10/10 and this one improves on every mechanic. What gives?", kaleidoscope:"You hate 'lazy sequels'? So you must also hate The Godfather Part II, Aliens, and The Empire Strikes Back, right? Just applying your own rule.", misquote:"So you're arguing that anyone who enjoyed this movie has objectively bad taste. That's a bold claim.", koan:"But can a film's box office performance truly measure the loneliness of its protagonist?"},
+                hobby: {gaslight:"Man, the anxiety you have over a $500 grinder is really showing. It's a hobby. It's not supposed to be this stressful.", semantic:"It's 'intersample peaking,' not 'clipping.' Hard to take your advice seriously when the terminology is off.", cobra:"Amazing photo. The lighting on the subject has a different color temp from the environment. What magical lens is that?", dos:"This switch is 'smoother'. Provide force curve graphs from a rig for 100 switches and acoustic analysis of the 'thock'.", echo:"YES! A $2000 USB CABLE IS THE BARE MINIMUM. Anyone who says they can't hear the difference is a deaf peasant!", inquisitor:"You call that a 'pour over'? You didn't even pre-rinse your filter for 60 seconds with 94°C water. Must be new here.", shiv:"Funny you're complaining about this brand's quality now. Saw your post history, you recommended it to 5 people last year.", kaleidoscope:"You believe in 'buy it for life.' So how much did you spend on your kid's shoes they'll outgrow in 6 months? Or does that logic only apply to your toys?", misquote:"So you're saying that anyone who buys this brand is a fool who likes wasting money? Just want to be clear.", koan:"If a photograph captures a moment, does the moment then cease to exist?"},
+                corporate: {gaslight:"Hey, saw your comment on the plan. You seem agitated. Just want to make sure you have the bandwidth for this. #mental-health", semantic:"Just to 'circle back', you used 'KPI' for a metric that is, technically, an 'OKR'. Let's align on terminology.", cobra:"When you said 'done,' did you mean 'done-done' or 'done' as in your part is finished? There's been confusion.", dos:"Interesting assertion. Could you link the Confluence doc with the project charter, RACI, and stakeholder sign-off?", echo:"Great point! Let's book a 2-hour deep-dive to paradigm-shift this and then form a tiger team to action the outputs!", inquisitor:"Someone *actually* committed to agile would have flagged this during sprint planning, not in a random Slack message.", shiv:"I'm looking at your Jira ticket from last quarter where you called this exact process 'streamlined and efficient.' What changed?", kaleidoscope:"Your motto is 'move fast and break things.' I assume you're okay with me pushing my untested code to prod and breaking your feature, then? It's our motto, after all.", misquote:"So your official position is that the marketing team's entire strategy is flawed. I'll make sure to note that.", koan:"What is the color of a successful synergy when it's not on a PowerPoint slide?"},
+                parenting: {gaslight:"Hun, I can feel the stress in this post. A stressed mommy isn't good for the baby. Take care of yourself ❤️", semantic:"I think you mean 'positive reinforcement,' not 'negative punishment.' It's important to know the difference!", cobra:"Not judging AT ALL, but what studies have you read that say that formula brand is safe? I've just heard things!", dos:"'Screen time is bad'. Cite the specific, peer-reviewed, longitudinal studies you're referencing.", echo:"Totally! No screen time before age 25! And ONLY wooden toys colored with organic vegetable dyes. Anything less is neglect!", inquisitor:"A juice box? A *real* attachment-parenting mom would know that processed sugar activates the same brain receptors as cocaine.", shiv:"Strange. I'm in another group with you where you were asking for easy snack ideas last week. Juice boxes were fine then?", kaleidoscope:"You say 'children need to solve their own problems.' So when your toddler falls, you just watch, right? No helping?", misquote:"So you believe that any parent who uses a disposable diaper is actively harming the planet? Is that what I'm hearing?", koan:"But when a child asks 'why?', does any answer truly suffice?"}
+            };
+            
+            generateBtn.addEventListener('click', () => {
+                const scenario = document.getElementById('scenario').value;
+                const techniqueKey = document.getElementById('technique').value;
+                const techniqueName = document.getElementById('technique').options[document.getElementById('technique').selectedIndex].text;
+
+                const trollPost = trolls[scenario][techniqueKey];
+
+                resultDiv.innerHTML = `
+                    <p style="color: var(--primary-glow);">// TECHNIQUE: ${techniqueName.toUpperCase()}</p>
+                    <p style="color: var(--primary-glow);">// PAYLOAD FOR [${scenario.toUpperCase()}]:</p>
+                    <div class="example">${trollPost}</div>
+                    <p style="color: var(--error-red);">// PREDICTED RESPONSE: TOTAL SYSTEM MELTDOWN.</p>
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>

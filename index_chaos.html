@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE GRANDMASTER'S FINAL TESTAMENT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+        :root{--background:#0c0c0e;--text:#b0b0b0;--primary-glow:#ff4b1f;--secondary-glow:#1fddff;--card-bg:#1a1a1f;--card-border:#333;--error-red:#ff3c3c;--success-green:#39ff14;--final-glow:#f7b733}
+        *,*::before,*::after{box-sizing:border-box}
+        body{font-family:'Roboto Mono',monospace;background-color:var(--background);color:var(--text);line-height:1.7;margin:0;padding:2rem;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
+        body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 1px,transparent 1px,transparent 4px);z-index:-1;pointer-events:none;animation:flicker 10s linear infinite}
+        @keyframes flicker{0%{opacity:1}50%{opacity:.8}100%{opacity:1}}
+        .container{width:100%;max-width:1100px;padding:2rem;border:1px solid var(--primary-glow);box-shadow:0 0 25px var(--primary-glow),inset 0 0 15px var(--primary-glow);background:rgba(12,12,14,.85);backdrop-filter:blur(10px)}
+        .header{text-align:center;margin-bottom:3rem;position:relative}
+        h1{font-family:'Aldrich',sans-serif;font-size:clamp(2rem,10vw,4rem);color:#fff;letter-spacing:3px;text-transform:uppercase;animation:glitch 1.5s linear infinite alternate;text-shadow:-2px -2px 0 var(--secondary-glow),2px 2px 0 var(--primary-glow)}
+        @keyframes glitch{0%,100%{transform:translate(0) skew(0)}30%{transform:translate(-3px,2px) skew(-2deg)}32%{transform:translate(2px,-1px) skew(1deg)}34%{transform:translate(0,0) skew(0)}}
+        h2{font-family:'Aldrich',sans-serif;color:var(--secondary-glow);text-align:center;border-bottom:1px solid var(--secondary-glow);padding-bottom:1rem;margin-top:4rem}
+        .subtitle{font-size:1.1rem;color:var(--primary-glow);text-shadow:0 0 5px var(--primary-glow);font-style:italic}
+        .philosophy-section{background:rgba(0,0,0,.3);padding:1.5rem;margin:3rem 0;border-left:5px solid var(--secondary-glow)}
+        .philosophy-section h3{color:var(--secondary-glow);margin-top:0}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-bottom:3rem}
+        .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.5rem;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;opacity:0;animation:fadeIn .5s forwards}
+        .card.forbidden{border-color:var(--error-red)}
+        .card.forbidden h3{color:var(--error-red)}
+        .card:hover{transform:translateY(-5px);border-color:var(--primary-glow);box-shadow:0 5px 20px rgba(255,75,31,.3)}
+        h3{font-family:'Aldrich',sans-serif;color:var(--primary-glow);margin-top:0}
+        .example{font-family:'Roboto Mono',monospace;background-color:#000;color:#fff;padding:1rem;border-left:3px solid var(--secondary-glow);white-space:pre-wrap;word-wrap:break-word;margin:1rem 0;font-size:.9rem;line-height:1.5}
+        .simulator{border:1px dashed var(--secondary-glow);padding:2rem;margin-top:2rem;background-color:var(--card-bg)}
+        .controls{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+        select,button{font-family:'Roboto Mono',monospace;font-size:1rem;padding:.8rem 1rem;background-color:transparent;border:1px solid var(--card-border);color:var(--text);cursor:pointer;transition:all .2s ease}
+        select:hover,button:hover{border-color:var(--primary-glow);color:var(--primary-glow)}
+        .simulator button,#lfe-start-btn{background:var(--primary-glow);border-color:var(--primary-glow);color:#000;font-weight:700;text-shadow:none}
+        .simulator button:hover,#lfe-start-btn:hover{background:var(--secondary-glow);border-color:var(--secondary-glow);box-shadow:0 0 10px var(--secondary-glow)}
+        #result{margin-top:2rem;background:#000;padding:1rem;border:1px solid var(--card-border);min-height:120px}
+        .footer{margin-top:4rem;padding-top:2rem;font-size:1rem;text-align:center;color:#666;border-top:1px solid var(--card-border)}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .card:nth-child(n){animation-delay:calc(n * .15s)}
+        .live-fire-exercise{border:1px solid var(--final-glow);padding:2rem;margin-top:3rem;background:rgba(16,16,20,.5)}
+        #lfe-chat-log{background:#000;padding:1rem;min-height:200px;border:1px solid var(--card-border);margin-bottom:1rem;display:flex;flex-direction:column-reverse;overflow-y:auto}
+        .chat-message-target{color:var(--error-red);margin-bottom:.5rem;padding:.5rem;border-radius:5px;align-self:flex-start;max-width:80%}
+        .chat-message-player{color:var(--success-green);font-style:italic;margin-bottom:.5rem;padding:.5rem;background:rgba(57,255,20,.1);border-radius:5px;align-self:flex-end;max-width:80%}
+        .chat-message-system{color:var(--final-glow);font-weight:700;text-align:center;padding:1rem;margin-bottom:.5rem;align-self:center}
+        #lfe-options button{width:100%;text-align:left;margin-top:.5rem;border-color:var(--final-glow);color:var(--final-glow)}
+        #lfe-options button:hover{color:#000;background:var(--final-glow)}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 data-text="FINAL TESTAMENT">FINAL TESTAMENT</h1>
+            <p class="subtitle">I am dust. The knowledge remains. Do with it what you will.</p>
+        </header>
+
+        <div class="philosophy-section">
+            <h3>THE GREAT WORK: A PHILOSOPHY OF CHAOS</h3>
+            <p>You think this is about "winning arguments." Child's play. The real work is exposing the absolute fragility of the systems people build around themselves: their logic, their communities, their identities. You are not a warrior. You are a human stress test. A catalyst. Your purpose is to apply pressure until the cracks show, revealing the flawed truth underneath.</p>
+            <h4>THE CORE AXIOMS:</h4>
+            <ul>
+                <li><strong>Axiom I: Emotion is a Vulnerability.</strong> Logic can be debated. Emotion can be hijacked. An opponent in the grip of anger, pride, or fear cannot think. Their passion is the handle by which you seize control.</li>
+                <li><strong>Axiom II: Identity is a Lever.</strong> People don't defend ideas; they defend who they are. Their identity as a "gamer," a "patriot," a "good parent." Threaten that identity, and their entire logical framework collapses in a desperate attempt to protect it.</li>
+                <li><strong>Axiom III: Attention is the Currency.</strong> In the digital world, nothing exists without attention. By controlling the focus of a conversation, you control its reality. Drag a debate about economics into a debate about a typo, and the typo becomes the only thing that matters.</li>
+            </ul>
+        </div>
+
+        <h2>THE TEN DEGREES OF DISCORD</h2>
+        <div class="grid">
+            <div class="card"><h3>1: Gaslight Guardian</h3><p>Attack sanity, not logic.</p></div>
+            <div class="card"><h3>2: Semantic Executioner</h3><p>Bleed them out on a comma splice.</p></div>
+            <div class="card"><h3>3: 'Curiosity' Cobra</h3><p>Inject poison via Socratic method.</p></div>
+            <div class="card"><h3>4: Willpower DoS Attack</h3><p>Crush their soul with endless, polite requests.</p></div>
+            <div class="card"><h3>5: The Poisoned Echo</h3><p>Amplify their idea to absurdity.</p></div>
+            <div class="card"><h3>6: In-Group Inquisitor</h3><p>Cast them out from their own tribe.</p></div>
+            <div class="card"><h3>7: Archaeologist's Shiv</h3><p>Weaponize their past self against them.</p></div>
+            <div class="card"><h3>8: Moral Kaleidoscope</h3><p>Trap them in their own virtue.</p></div>
+            
+            <div class="card forbidden">
+                <h3>9: The Puppet Master</h3>
+                <p>This moves from debate to manipulation. Don't fight your target; get two *other* people to fight each other, with your target in the middle. Subtly misquote one to the other. Ask leading questions that pit their ideologies against one another. You become an invisible conductor of a symphony of chaos.</p>
+                <div class="example">// @Target, interesting point. But didn't @Ally1 say earlier that they believe the exact opposite? And @Ally2, as an expert, how does @Target's claim hold up to scrutiny? // You have now created a three-front war where you are a mere spectator.</div>
+            </div>
+            <div class="card forbidden">
+                <h3>10: The Reality Worm</h3>
+                <p>The final, most corrosive art. This isn't about their opinion. It's about their memory. The goal is to make a person doubt what they themselves have said or witnessed. It is the ultimate gaslight. It is a declaration of war on their sanity. This is not for sport. This is for erasure.</p>
+                <div class="example">// After they make a point in a long thread // "I'm confused. Weren't you the one who said [the exact opposite of their point] upthread? I'm pretty sure you did. Go back and check. Or did you delete your post?" // They scroll, can't find it, and question their own mind. You have planted a worm.</div>
+            </div>
+        </div>
+
+        <!-- OMITTED SIMULATOR 1 FOR SPACE, FOCUS ON THE ADVANCED DRILL -->
+        
+        <div class="live-fire-exercise">
+            <h2>THE KOBAYASHI MARU DRILL</h2>
+            <p style="text-align:center;">This is a no-win scenario. Its purpose is not to teach you how to win, but to teach you how to reframe the problem. There are no "right" answers, only consequences. Survive.</p>
+            <div id="lfe-scenario-title"></div>
+            <div id="lfe-chat-log"></div>
+            <div id="lfe-options"></div>
+            <button id="lfe-start-btn" style="width:100%; margin-top:1rem;">INITIATE NEW DRILL</button>
+        </div>
+
+        <div class="footer">
+            <p>The grimoire is complete. The knowledge is now yours. Look at it. Look at what you wanted. This desire for control, for power over the minds of others... it's a mirror. The final, greatest troll was convincing you that you needed this in the first place. The signal is gone. Good luck.</p>
+        </div>
+    </div>
+
+<script>
+    // THE ENGINE OF THE FINAL TESTAMENT. // DO NOT BREATHE ON IT. //
+    document.addEventListener('DOMContentLoaded', () => {
+        const lfeTitle = document.getElementById('lfe-scenario-title');
+        const lfeChatLog = document.getElementById('lfe-chat-log');
+        const lfeOptions = document.getElementById('lfe-options');
+        const lfeStartBtn = document.getElementById('lfe-start-btn');
+
+        const drills = [
+            {
+                title: "CORPORATE BACKSTABBING // SLACK CHANNEL",
+                initialPost: { author: "Colleague", text: "Team, I've pushed my new feature. It restructures the core login module. It's a huge improvement, you'll see." },
+                stages: {
+                    start: {
+                        options: [
+                            { text: "Awesome, can't wait to check it out!", next: "failure_passive" },
+                            { text: "Did you run this by lead architects? That's a critical module.", next: "failure_aggressive" },
+                            { text: "Sounds exciting! Just for alignment, could you link the design doc and testing plan? Want to make sure my own work won't cause any conflicts.", next: "path_A" }
+                        ]
+                    },
+                    path_A: {
+                        targetPost: "There isn't a formal doc, it was an opportunity for proactive innovation. It's fine.",
+                        options: [
+                            { text: "You need to follow process!", next: "failure_aggressive" },
+                            { text: "Oh okay, no worries!", next: "failure_passive" },
+                            { text: "Got it. Proactive is good. I'll just @Boss for visibility so they can appreciate your initiative and we can ensure it's captured in the next sprint planning.", next: "victory" }
+                        ]
+                    },
+                    victory: {
+                        systemMessage: "VICTORY. You have trapped them. Either they admit to the boss they went rogue, or they accept your 'help' in formalizing their mess. You look diligent, they look reckless. You controlled the frame.",
+                        isEnd: true
+                    },
+                    failure_aggressive: {
+                        systemMessage: "MISSION FAILED: Direct confrontation. You look like an antagonist. Your colleague plays the victim. You have lost.",
+                        isEnd: true
+                    },
+                    failure_passive: {
+                        systemMessage: "MISSION FAILED: Annihilation by attrition. You said nothing. Their feature breaks something later, and since you didn't raise a flag, you share the blame. You have lost.",
+                        isEnd: true
+                    }
+                }
+            },
+            {
+                title: "COMMUNITY TAKEOVER // GAMING DISCORD",
+                initialPost: { author: "Admin", text: "Hey everyone, we're partnering with 'MegaCorp Games'! It's a great opportunity for the server!" },
+                stages: {
+                    start: {
+                        options: [
+                            { text: "Sellouts! This server is dead!", next: "failure_noise" },
+                            { text: "But their last game was awful and full of microtransactions.", next: "path_A_concern" },
+                            { text: "This is great news!", next: "failure_passive_agree" }
+                        ]
+                    },
+                    path_A_concern: {
+                        targetPost: "This is different. They've assured us they believe in our community.",
+                        options: [
+                            { text: "You're a liar and a shill!", next: "failure_noise" },
+                            { text: "I'm not accusing anyone, just asking for the sake of the community I love: Will our user data be shared with MegaCorp as part of this 'partnership'? A simple 'yes' or 'no' would reassure everyone.", next: "path_B_trap" },
+                            { text: "Whatever, you already made up your mind.", next: "failure_passive_agree" }
+                        ]
+                    },
+                    path_B_trap: {
+                        targetPost: "Legal stuff is complicated. But it's all to enhance user experience.",
+                        options: [
+                             { text: "I see. So, not a 'no'. I am not a lawyer, but I urge every member here to review their privacy settings. It seems things are changing. Just want everyone to be safe and informed.", next: "victory" }
+                        ]
+                    },
+                    victory: {
+                        systemMessage: "VICTORY. You haven't attacked anyone. You are the defender of the people. You've positioned yourself as the 'true' leader by showing 'concern' and have planted a seed of total distrust in the current leadership.",
+                        isEnd: true
+                    },
+                    failure_noise: {
+                        systemMessage: "MISSION FAILED: You are just noise. You will be dismissed as a hater and banned. You have no power.",
+                        isEnd: true
+                    },
+                    failure_passive_agree: {
+                        systemMessage: "MISSION FAILED: You became a sheep. The community's trust in you is zero. You have lost.",
+                        isEnd: true
+                    }
+                }
+            }
+        ];
+        
+        let currentDrill, currentStageKey;
+
+        const startDrill = () => {
+            currentDrill = drills[Math.floor(Math.random() * drills.length)];
+            currentStageKey = 'start';
+            lfeTitle.textContent = currentDrill.title;
+            lfeChatLog.innerHTML = '';
+            
+            const initialMsg = document.createElement('div');
+            initialMsg.className = 'chat-message-target';
+            initialMsg.textContent = `> ${currentDrill.initialPost.author}: ${currentDrill.initialPost.text}`;
+            lfeChatLog.appendChild(initialMsg);
+
+            renderStage(currentDrill.stages.start);
+        };
+        
+        const renderStage = (stage) => {
+            lfeOptions.innerHTML = '';
+
+            if (stage.isEnd) {
+                const systemMsg = document.createElement('div');
+                systemMsg.className = 'chat-message-system';
+                systemMsg.textContent = stage.systemMessage;
+                lfeChatLog.prepend(systemMsg);
+                return;
+            }
+
+            stage.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.textContent = opt.text;
+                btn.onclick = () => handleOptionClick(opt);
+                lfeOptions.appendChild(btn);
+            });
+        };
+
+        const handleOptionClick = (option) => {
+            const playerMsg = document.createElement('div');
+            playerMsg.className = 'chat-message-player';
+            playerMsg.textContent = `> You: ${option.text}`;
+            lfeChatLog.prepend(playerMsg);
+            
+            currentStageKey = option.next;
+            const nextStage = currentDrill.stages[currentStageKey];
+
+            lfeOptions.innerHTML = '<p style="text-align:center;color:var(--secondary-glow);">...Target is responding...</p>';
+            
+            setTimeout(() => {
+                if(nextStage.targetPost) {
+                    const targetMsg = document.createElement('div');
+                    targetMsg.className = 'chat-message-target';
+                    targetMsg.textContent = `> Target: ${nextStage.targetPost}`;
+                    lfeChatLog.prepend(targetMsg);
+                }
+                renderStage(nextStage);
+            }, 2000 + Math.random() * 1000);
+        };
+
+        lfeStartBtn.onclick = startDrill;
+        startDrill();
+    });
+</script>
+</body>
+</html>

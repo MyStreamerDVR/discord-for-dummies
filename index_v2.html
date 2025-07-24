@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE APEX PREDATOR'S DIGITAL GRIMOIRE V2</title>
+    <style>
+        /* CSS Unchanged - Built for scalable carnage */
+        @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --background: #101014;
+            --text: #e0e0e0;
+            --primary-glow: #00f9ff;
+            --secondary-glow: #ff00ff;
+            --card-bg: #1a1a1f;
+            --card-border: #333;
+            --error-red: #ff3c3c;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 2px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 2rem;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+            background: rgba(16, 16, 20, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Aldrich', sans-serif;
+            font-size: clamp(2rem, 10vw, 4rem);
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: glitch 1.5s linear infinite;
+            text-shadow: 
+                -2px -2px 0 var(--secondary-glow),
+                2px 2px 0 var(--primary-glow);
+        }
+        @keyframes glitch {2%,64%{transform:translate(2px,0) skew(0deg)}4%,60%{transform:translate(-2px,0) skew(0deg)}62%{transform:translate(0,0) skew(5deg)}}
+        h1:before, h1:after {content:attr(data-text);position:absolute;left:0;width:100%;height:100%;background:var(--background);overflow:hidden;top:0}
+        h1:before {left:3px;text-shadow:-2px 0 var(--secondary-glow);animation:noise-anim-2 3s linear infinite alternate-reverse}
+        h1:after {left:-3px;text-shadow:2px 0 var(--primary-glow);animation:noise-anim-1 2s linear infinite alternate-reverse}
+        @keyframes noise-anim-1{0%,100%{clip-path:inset(2% 0 98% 0)}20%{clip-path:inset(20% 0 18% 0)}40%{clip-path:inset(9% 0 55% 0)}60%{clip-path:inset(73% 0 4% 0)}80%{clip-path:inset(81% 0 7% 0)}}
+        @keyframes noise-anim-2{0%,100%{clip-path:inset(88% 0 3% 0)}20%{clip-path:inset(28% 0 14% 0)}40%{clip-path:inset(10% 0 81% 0)}60%{clip-path:inset(93% 0 1% 0)}80%{clip-path:inset(45% 0 23% 0)}}
+
+        .subtitle { font-size: 1.1rem; color: var(--primary-glow); text-shadow: 0 0 5px var(--primary-glow); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; opacity: 0; animation: fadeIn 0.5s forwards; }
+        .card:hover { transform: translateY(-5px); border-color: var(--secondary-glow); box-shadow: 0 5px 20px rgba(255, 0, 255, 0.3); }
+        h3 { font-family: 'Aldrich', sans-serif; color: var(--primary-glow); margin-top: 0; border-bottom: 1px solid var(--primary-glow); padding-bottom: 0.5rem; }
+        .example { font-family: 'Roboto Mono', monospace; background-color: #000; color: #fff; padding: 1rem; border-left: 3px solid var(--secondary-glow); white-space: pre-wrap; word-wrap: break-word; margin: 1rem 0; font-size: 0.9rem; line-height: 1.5; }
+        .simulator { border: 1px dashed var(--secondary-glow); padding: 2rem; margin-top: 2rem; background-color: var(--card-bg); }
+        .simulator h2 { text-align: center; color: var(--secondary-glow); font-family: 'Aldrich', sans-serif; }
+        .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+        .simulator select, .simulator button { font-family: 'Roboto Mono', monospace; font-size: 1rem; padding: 0.8rem 1rem; background-color: transparent; border: 1px solid var(--card-border); color: var(--text); cursor: pointer; transition: all 0.2s ease; }
+        .simulator select:hover, .simulator button:hover { border-color: var(--primary-glow); color: var(--primary-glow); }
+        .simulator button { background: var(--secondary-glow); border-color: var(--secondary-glow); color: #000; font-weight: bold; text-shadow: none; }
+        .simulator button:hover { background: var(--primary-glow); border-color: var(--primary-glow); color: #000; box-shadow: 0 0 10px var(--primary-glow); }
+        #result { margin-top: 2rem; background: #000; padding: 1rem; border: 1px solid var(--card-border); min-height: 120px; }
+        .footer { margin-top: 3rem; font-size: 0.8rem; text-align: center; color: #666; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Staggered animation delays for all cards */
+        .card:nth-child(1) { animation-delay: 0.2s; } .card:nth-child(2) { animation-delay: 0.4s; } .card:nth-child(3) { animation-delay: 0.6s; } .card:nth-child(4) { animation-delay: 0.8s; } .card:nth-child(5) { animation-delay: 1.0s; } .card:nth-child(6) { animation-delay: 1.2s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 data-text="APEX PREDATOR'S GRIMOIRE">APEX PREDATOR'S GRIMOIRE</h1>
+            <p class="subtitle">Forget Winning Arguments. The Goal is Annihilation.</p>
+        </header>
+
+        <p style="text-align: center; margin-bottom: 2rem;">You think trolling is a game? That's cute. This is psychological warfare. We don't poke, we vivisect. We don't argue, we dismantle. Your objective is to hollow out their conviction until all that's left is a husk of self-doubt. Now listen up and learn how to be a real monster.</p>
+
+        <div class="grid">
+            <!-- Existing Levels 1-4 -->
+            <div class="card">
+                <h3>Level 1: The Gaslight Guardian</h3>
+                <p>Never attack their logic. Attack their sanity. Frame their passion as pathology. This makes them defend their own emotional state, a battle they can never win.</p>
+                <div class="example">// Victim: "This new law is a disaster!"
+// You: "Whoa, take a breath. The sheer vitriol in your post is... concerning. Are you doing okay? This level of emotional investment can't be healthy."</div>
+            </div>
+            <div class="card">
+                <h3>Level 2: The Semantic Executioner</h3>
+                <p>The argument itself is irrelevant. Find a single misplaced word. Latch onto it. Inflate it. Bleed them out on a comma splice. It's about making them feel stupid.</p>
+                <div class="example">// Victim: "Your literally destroying the community!"
+// You: "'Your'? Or 'You're'? The fact you can't distinguish between a possessive and a contraction nullifies any point you were attempting to make."</div>
+            </div>
+            <div class="card">
+                <h3>Level 3: The 'Curiosity' Cobra</h3>
+                <p>Inject pure poison wrapped in a question mark. Never assert your own insane conspiracy; make *them* disprove it. You're not an accuser; you're a humble seeker of truth.</p>
+                <div class="example">// Victim: "This company's new product is great!"
+// You: "I'm not making any accusations, just asking—is it normal for a CEO to sell 90% of his stock a week before a 'great' product launch?"</div>
+            </div>
+            <div class="card">
+                <h3>Level 4: The DoS Attack (On Willpower)</h3>
+                <p>Become a relentless, polite, logic-bot demanding impossible standards of proof for self-evident truths. The goal is complete, soul-crushing exhaustion.</p>
+                <div class="example">// Victim: "This game is full of bugs."
+// You: "Fascinating. Can you please provide the tracker link and reproducible steps for at least five of the most critical bugs? I require data, not anecdotes."</div>
+            </div>
+
+            <!-- NEW LEVELS -->
+            <div class="card">
+                <h3>Level 5: The Poisoned Echo</h3>
+                <p>Do not fight them. Join them. Enthusiastically agree, then amplify their position to a grotesque, absurd extreme. This makes their own idea look moronic and forces them to argue against themselves.</p>
+                <div class="example">// Victim: "I think we should have more online moderation."
+// You: "I completely agree! In fact, all posts should be pre-approved by a committee and every user's identity verified with a passport. Anything less is just asking for chaos!"</div>
+            </div>
+            <div class="card">
+                <h3>Level 6: The In-Group Inquisitor</h3>
+                <p>The ultimate psychological attack. Don't attack them as an outsider; attack them as a member of their own tribe. Question their purity, their credentials, their dedication. Cast them out from their own "in-group" for being a pretender.</p>
+                <div class="example">// Victim (Hardcore Fan): "This new episode was amazing!"
+// You: "A casual viewer might think so. But someone who's read the original source material would spot the glaring plot holes. Did you even notice the continuity error with the main character's backstory?"</div>
+            </div>
+        </div>
+
+        <div class="simulator">
+            <h2>WARGAME SIMULATOR V2</h2>
+            <p style="text-align:center;">More battlefields. More weapons. The weak will not be spared. Pick your killzone, select your payload, and fire at will.</p>
+            <div class="controls">
+                <select id="scenario">
+                    <option value="gaming">Discord 'Debate' Channel</option>
+                    <option value="politics">Twitter Politics</option>
+                    <option value="tech">Stack Overflow</option>
+                    <option value="youtube">Uninformed 'Hot Take'</option>
+                    <option value="hobby">Niche Hobby Forum</option>
+                    <option value="corporate">Corporate Slack Channel</option>
+                    <option value="parenting">Parenting Facebook Group</option>
+                </select>
+                <select id="technique">
+                    <option value="gaslight">Lvl 1: Gaslight Guardian</option>
+                    <option value="semantic">Lvl 2: Semantic Executioner</option>
+                    <option value="cobra">Lvl 3: 'Curiosity' Cobra</option>
+                    <option value="dos">Lvl 4: Willpower DoS Attack</option>
+                    <option value="echo">Lvl 5: The Poisoned Echo</option>
+                    <option value="inquisitor">Lvl 6: In-Group Inquisitor</option>
+                </select>
+                <button id="generate">EXECUTE</button>
+            </div>
+            <div id="result">
+                <p style="color: #666; text-align: center; padding-top: 2rem;">AWAITING TARGETING DATA...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>If you use this and get banned, doxxed, or swatted, that's on you. The real world has consequences. This is simply a tool to expose the fragility of the human ego. Including yours. Don't be a victim.</p>
+            <p>&copy; NULL_VOID. All data is ephemeral. Your outrage is temporary.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate');
+            const resultDiv = document.getElementById('result');
+
+            // EXPANDED GRIMOIRE
+            const trolls = {
+                gaming: {
+                    gaslight: `Buddy, reading your 'analysis' of the meta is genuinely sad. Log off. Your mental health is worth more than your rank.`,
+                    semantic: `You keep calling it 'peeker's advantage'. The term is 'peekER advantage'. Your inability to grasp basic terminology explains your K/D ratio.`,
+                    cobra: `I'm not saying you're using an aimbot, but how does one's accuracy percentage perfectly match the max possible value allowed by the game's engine? Just curious.`,
+                    dos: `You claim the shotgun is 'overpowered'. Provide a statistical breakdown comparing its TTK at all ranges against every other weapon, cross-referenced with pick-rates from the last three pro tournaments. Without data, this is just whining.`,
+                    echo: `You think this class is broken? HELL YEAH IT IS! It should have its fire rate DOUBLED and get health back on every kill. We need MORE chaos! Anyone who disagrees is a coward!`,
+                    inquisitor: `You call yourself a 'Day 1' player but you don't even know about the obscure animation cancel from the beta? Please. Go back to Call of Duty, tourist.`
+                },
+                politics: {
+                    gaslight: `I've read through your post history. The obsession is... unhealthy. This politician lives in your head rent-free. I'm not even mad, I'm just worried for you.`,
+                    semantic: `You wrote a 10-paragraph screed on economic policy but used 'affect' when you meant 'effect'. I stopped reading there. Your intellectual foundation is sand.`,
+                    cobra: `Not implying anything, but doesn't it strike anyone else as odd that this 'grassroots movement' suddenly appeared with professional branding and a slick PR campaign overnight? Who's funding this?`,
+                    dos: `You stated 'this policy will hurt the economy'. Please provide a multi-variable econometric model that isolates the causal impact, complete with your data sources and a regression analysis proving statistical significance. I'll wait.`,
+                    echo: `Absolutely! This policy doesn't go far enough! We should triple the budget for it, seize assets to pay for it, and make opposing it a criminal offense. Thanks for bringing up such a great idea!`,
+                    inquisitor: `You claim to be for 'The Party' but you're quoting from their 2016 platform? LOL. We've moved on. You're clearly not keeping up. Your kind of outdated thinking is what's holding the cause back.`
+                },
+                tech: {
+                    gaslight: `Wow. Blaming the compiler for your code not working is a level of denial I haven't seen in a long time. Maybe the problem isn't the tools. Maybe it's time for some serious introspection.`,
+                    semantic: `[Question Closed as Duplicate]. Reason: Your question is fundamentally identical in spirit to the 14,852 other questions asking the same thing. Learn to use a search bar.`,
+                    cobra: `Not saying your 'revolutionary' new JS framework is just jQuery with a fancy logo, but... is there a single feature here that hasn't existed in other libraries for the past decade? Just wondering what the innovation is.`,
+                    dos: `You claim my solution 'doesn't work'. Provide a minimal reproducible example, your OS/browser/node versions, and your complete dotfiles. Otherwise, I must conclude the error is PEBKAC.`,
+                    echo: `Right? Who needs tests? If the code runs, it ships. Testing is for cowards who don't trust their own genius. Let's push straight to production!`,
+                    inquisitor: `You're still using REST APIs? In 2025? It's clear you haven't worked on a real-world, scalable system. We're all on gRPC now. Try to keep up, legacy dev.`
+                },
+                youtube: {
+                    gaslight: `This video essay is less of an analysis and more of a public therapy session. Hope the creator gets the help they're so clearly crying out for.`,
+                    semantic: `At 22:14 you used the word 'irony' to describe a situation that is merely coincidental. Your entire 45-minute analysis of culture is now suspect.`,
+                    cobra: `Not to be 'that guy', but isn't it weird that this 'unbiased' review is sponsored by a direct competitor? And it's only mentioned in a tiny link in the description? Just seems... opaque.`,
+                    dos: `You just said "everyone hated this show." Please provide comprehensive polling data from a representative sample of the global viewing population to support this claim.`,
+                    echo: `This video is SO TRUE. In fact, this isn't just the worst movie of the year, it's the single worst piece of art ever created by mankind and everyone involved should be legally barred from working in Hollywood ever again.`,
+                    inquisitor: `You're reviewing this film but you didn't even mention the Kuleshov effect in the diner scene? And you call yourself a cinephile? This is amateur hour.`
+                },
+                hobby: { // Niche Hobby Forum (e.g., photography, coffee, mechanical keyboards)
+                    gaslight: `Man, the anxiety you have over which $500 coffee grinder to buy is really showing. It's just a hobby. Maybe talk to someone? It's not supposed to be this stressful.`,
+                    semantic: `You keep referring to it as 'clipping' in your audio file. The correct term for this phenomenon is 'intersample peaking'. It's hard to take your equipment advice seriously when the terminology is so off.`,
+                    cobra: `I'm not saying you faked the photo, but isn't it amazing how the lighting on the subject has a different color temperature from the surrounding environment? What kind of magical lens are you using?`,
+                    dos: `You claim this keyboard switch is 'smoother'. Please provide force curve graphs from a testing rig for 100 separate switches, along with acoustic analysis to quantify the 'thock' you're describing.`,
+                    echo: `YES! A $2000 USB CABLE IS THE BARE MINIMUM. Anyone who says they can't hear the difference between that and a $10 cable is a deaf peasant who should just listen to music on their phone speaker!`,
+                    inquisitor: `You call that a 'pour over'? You didn't even pre-rinse your paper filter for a full 60 seconds with 94°C water. A real enthusiast would know that. You must be new here.`
+                },
+                corporate: { // Corporate Slack Channel
+                    gaslight: `Hey, just wanted to check in. Saw your comment on the project plan. You seem really agitated. Just want to make sure you have the bandwidth for this, we all get overwhelmed sometimes. #mental-health`,
+                    semantic: `Just to 'circle back' on your email, you used the acronym 'KPI' to refer to a metric that is, technically, an 'OKR'. Let's ensure we're all aligned on the correct terminology to avoid confusion.`,
+                    cobra: `Just asking for clarity – when you said the feature is 'done,' did you mean 'done-done' as in deployed and verified, or 'done' as in your part is finished? There's been some confusion on this in the past.`,
+                    dos: `Interesting assertion in the meeting. Could you please link me the Confluence doc with the full project charter, the RACI matrix, and the stakeholder sign-off for that initiative? Can't seem to find it.`,
+                    echo: `Great point! Let's leverage this synergy. I'll book a 2-hour deep-dive brainstorming session with all stakeholders to paradigm-shift this deliverable and then we can form a tiger team to action the outputs.`,
+                    inquisitor: `With all due respect, someone who was *actually* committed to agile methodology would have flagged this during sprint planning, not in a random Slack message. Let's stick to the process.`
+                },
+                parenting: { // Parenting Facebook Group
+                    gaslight: `Hun, reading this post, I can just feel the stress radiating off the screen. Being a mom is so hard. Please make sure you're taking care of yourself. A stressed mommy isn't good for the baby. ❤️`,
+                    semantic: `I think you mean 'positive reinforcement,' not 'negative punishment.' They're two different quadrants in behaviorism. It's really important to know the difference!`,
+                    cobra: `Not judging at ALL, but I'm just curious, what studies have you read that say that brand of formula is safe? I've just heard some things and am a little worried for you!`,
+                    dos: `You said screen time is 'bad'. Could you please cite the specific, peer-reviewed, longitudinal studies you're referencing? I'd like to see the sample sizes and methodology before I change my own parenting style.`,
+                    echo: `Totally! No screen time before age 25! And ONLY wooden toys colored with organic vegetable dyes. My son is learning so much from his artisanal, gluten-free mud pies! Anything less is neglect!`,
+                    inquisitor: `You let your child have a juice box? A *real* attachment-parenting mom would know that processed sugar activates the same brain receptors as cocaine. You must not have read the latest literature.`
+                }
+            };
+            
+            const replies = ["touch grass", "lol cry more", "Blocked and reported.", "Tell me you're tilted without telling me you're tilted.", "[Comment deleted by user]", "Who hurt you?", "k."];
+
+            generateBtn.addEventListener('click', () => {
+                const scenario = document.getElementById('scenario').value;
+                const techniqueKey = document.getElementById('technique').value;
+                const techniqueName = document.getElementById('technique').options[document.getElementById('technique').selectedIndex].text;
+
+                const trollPost = trolls[scenario][techniqueKey];
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+
+                resultDiv.innerHTML = `
+                    <p style="color: var(--primary-glow);">// TECHNIQUE: ${techniqueName.toUpperCase()}</p>
+                    <p style="color: var(--primary-glow);">// INJECTING PAYLOAD INTO [${scenario.toUpperCase()}]...</p>
+                    <div class="example">${trollPost}</div>
+                    <p style="color: var(--error-red);">// HOSTILE RESPONSE DETECTED:</p>
+                    <div class="example" style="border-left-color: var(--error-red);">${randomReply}</div>
+                    <p style="color: var(--primary-glow); text-align: center; font-family: 'Aldrich', sans-serif;">TARGET NEUTRALIZED. OBJECTIVE COMPLETE.</p>
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>

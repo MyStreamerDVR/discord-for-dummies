@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE APEX PREDATOR'S GRIMOIRE // FINAL PROTOCOL</title>
+    <style>
+        /* CSS Unchanged - Built for scalable carnage */
+        @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+        :root{--background:#101014;--text:#e0e0e0;--primary-glow:#00f9ff;--secondary-glow:#ff00ff;--card-bg:#1a1a1f;--card-border:#333;--error-red:#ff3c3c;--success-green:#39ff14}
+        *,*::before,*::after{box-sizing:border-box}
+        body{font-family:'Roboto Mono',monospace;background-color:var(--background);color:var(--text);line-height:1.7;margin:0;padding:2rem;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
+        body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4) 1px,transparent 1px,transparent 2px);z-index:-1;pointer-events:none}
+        .container{width:100%;max-width:900px;padding:2rem;border:1px solid var(--primary-glow);box-shadow:0 0 15px var(--primary-glow),inset 0 0 10px var(--primary-glow);background:rgba(16,16,20,0.8);backdrop-filter:blur(5px)}
+        .header{text-align:center;margin-bottom:3rem;position:relative}
+        h1{font-family:'Aldrich',sans-serif;font-size:clamp(2rem,10vw,4rem);color:#fff;letter-spacing:3px;text-transform:uppercase;animation:glitch 1.5s linear infinite;text-shadow:-2px -2px 0 var(--secondary-glow),2px 2px 0 var(--primary-glow)}
+        @keyframes glitch{2%,64%{transform:translate(2px,0) skew(0deg)}4%,60%{transform:translate(-2px,0) skew(0deg)}62%{transform:translate(0,0) skew(5deg)}}
+        h1:before,h1:after{content:attr(data-text);position:absolute;left:0;width:100%;height:100%;background:var(--background);overflow:hidden;top:0}
+        h1:before{left:3px;text-shadow:-2px 0 var(--secondary-glow);animation:noise-anim-2 3s linear infinite alternate-reverse}
+        h1:after{left:-3px;text-shadow:2px 0 var(--primary-glow);animation:noise-anim-1 2s linear infinite alternate-reverse}
+        @keyframes noise-anim-1{0%,100%{clip-path:inset(2% 0 98% 0)}20%{clip-path:inset(20% 0 18% 0)}40%{clip-path:inset(9% 0 55% 0)}60%{clip-path:inset(73% 0 4% 0)}80%{clip-path:inset(81% 0 7% 0)}}
+        @keyframes noise-anim-2{0%,100%{clip-path:inset(88% 0 3% 0)}20%{clip-path:inset(28% 0 14% 0)}40%{clip-path:inset(10% 0 81% 0)}60%{clip-path:inset(93% 0 1% 0)}80%{clip-path:inset(45% 0 23% 0)}}
+        h2{font-family:'Aldrich',sans-serif;color:var(--secondary-glow);text-align:center;}
+        .subtitle{font-size:1.1rem;color:var(--primary-glow);text-shadow:0 0 5px var(--primary-glow)}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-bottom:3rem}
+        .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.5rem;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;opacity:0;animation:fadeIn .5s forwards}
+        .card:hover{transform:translateY(-5px);border-color:var(--secondary-glow);box-shadow:0 5px 20px rgba(255,0,255,.3)}
+        h3{font-family:'Aldrich',sans-serif;color:var(--primary-glow);margin-top:0;border-bottom:1px solid var(--primary-glow);padding-bottom:.5rem}
+        .example{font-family:'Roboto Mono',monospace;background-color:#000;color:#fff;padding:1rem;border-left:3px solid var(--secondary-glow);white-space:pre-wrap;word-wrap:break-word;margin:1rem 0;font-size:.9rem;line-height:1.5}
+        .simulator{border:1px dashed var(--secondary-glow);padding:2rem;margin-top:2rem;background-color:var(--card-bg)}
+        .controls{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+        .simulator select,.simulator button,.live-fire-exercise button{font-family:'Roboto Mono',monospace;font-size:1rem;padding:.8rem 1rem;background-color:transparent;border:1px solid var(--card-border);color:var(--text);cursor:pointer;transition:all .2s ease}
+        .simulator select:hover,.simulator button:hover,.live-fire-exercise button:hover{border-color:var(--primary-glow);color:var(--primary-glow)}
+        .simulator button, #lfe-start-btn{background:var(--secondary-glow);border-color:var(--secondary-glow);color:#000;font-weight:700;text-shadow:none}
+        .simulator button:hover, #lfe-start-btn:hover{background:var(--primary-glow);border-color:var(--primary-glow);color:#000;box-shadow:0 0 10px var(--primary-glow)}
+        #result{margin-top:2rem;background:#000;padding:1rem;border:1px solid var(--card-border);min-height:120px}
+        .footer{margin-top:3rem;font-size:.8rem;text-align:center;color:#666}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .card:nth-child(1){animation-delay:.2s} .card:nth-child(2){animation-delay:.4s} .card:nth-child(3){animation-delay:.6s} .card:nth-child(4){animation-delay:.8s} .card:nth-child(5){animation-delay:1s} .card:nth-child(6){animation-delay:1.2s} .card:nth-child(7){animation-delay:1.4s} .card:nth-child(8){animation-delay:1.6s}
+        .live-fire-exercise { border: 1px solid var(--primary-glow); padding: 2rem; margin-top: 3rem; background: rgba(16, 16, 20, 0.5); }
+        #lfe-chat-log { background: #000; padding: 1rem; min-height: 100px; border: 1px solid var(--card-border); margin-bottom: 1rem; }
+        .chat-message-target { color: var(--error-red); margin-bottom: 0.5rem; }
+        .chat-message-player { color: var(--success-green); font-style: italic; }
+        #lfe-options { display: flex; flex-direction: column; gap: 0.5rem; }
+        #lfe-options button { width: 100%; text-align: left; }
+        #lfe-feedback { margin-top: 1rem; padding: 0.5rem; text-align: center; font-weight: 700; }
+        .feedback-success { color: var(--success-green); border: 1px solid var(--success-green); }
+        .feedback-failure { color: var(--error-red); border: 1px solid var(--error-red); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 data-text="FINAL PROTOCOL">FINAL PROTOCOL</h1>
+            <p class="subtitle">An Apex Predator's Grimoire for Digital Decimation</p>
+        </header>
+
+        <div class="grid">
+            <!-- Levels 1-6 -->
+            <div class="card"><h3>Level 1: Gaslight Guardian</h3><p>Attack their sanity, not their logic. Frame passion as pathology.</p></div>
+            <div class="card"><h3>Level 2: Semantic Executioner</h3><p>The argument is irrelevant. Bleed them out on a comma splice. Make them feel stupid.</p></div>
+            <div class="card"><h3>Level 3: 'Curiosity' Cobra</h3><p>Inject poison wrapped in a question mark. Let them exhaust themselves fighting shadows.</p></div>
+            <div class="card"><h3>Level 4: Willpower DoS Attack</h3><p>Become a relentless logic-bot demanding impossible proof for self-evident truths.</p></div>
+            <div class="card"><h3>Level 5: The Poisoned Echo</h3><p>Agree enthusiastically, then amplify their position to a grotesque, absurd extreme. Forces them to argue against their own idea.</p></div>
+            <div class="card"><h3>Level 6: In-Group Inquisitor</h3><p>Attack them not as an outsider, but as a "purer" member of their own tribe. Question their credentials. Cast them out.</p></div>
+
+            <!-- NEW LEVELS -->
+            <div class="card">
+                <h3>Level 7: The Archaeologist's Shiv</h3>
+                <p>Dig through their post history. Find a contradiction, no matter how old or out of context. Weaponize their past self against their present self to expose them as a hypocrite. The ultimate loyalty test is to oneself.</p>
+                <div class="example">// Victim (2025): "This game developer is lazy!"
+// You (quoting their 2018 post): "'Stop harassing devs, making games is hard!' - So, what changed? Did you become an expert game dev in the last 7 years, or did you just get angrier?"</div>
+            </div>
+            <div class="card">
+                <h3>Level 8: The Moral Kaleidoscope</h3>
+                <p>Isolate their stated moral principle. Apply it back to them in a different context where it makes them monstrously hypocritical. Trap them in their own supposed virtue. Checkmate.</p>
+                <div class="example">// Victim: "Stealing is always wrong, period. No exceptions."
+// You: "Interesting. So if your family was starving, and you had a chance to steal a loaf of bread from a billionaire's third yacht, you'd let your family starve? That's your moral code?"</div>
+            </div>
+        </div>
+
+        <div class="simulator">
+            <h2>WARGAME SIMULATOR V2</h2>
+            <p style="text-align:center;">The Killchain Starter. Generates single-strike payloads for various battlefields.</p>
+            <div class="controls">
+                <select id="scenario"><option value="gaming">Discord 'Debate' Channel</option><option value="politics">Twitter Politics</option><option value="tech">Stack Overflow</option><option value="youtube">Uninformed 'Hot Take'</option><option value="hobby">Niche Hobby Forum</option><option value="corporate">Corporate Slack Channel</option><option value="parenting">Parenting Facebook Group</option></select>
+                <select id="technique"><option value="gaslight">Lvl 1: Gaslight</option><option value="semantic">Lvl 2: Semantics</option><option value="cobra">Lvl 3: Cobra</option><option value="dos">Lvl 4: DoS</option><option value="echo">Lvl 5: Echo</option><option value="inquisitor">Lvl 6: Inquisitor</option><option value="shiv">Lvl 7: Shiv</option><option value="kaleidoscope">Lvl 8: Kaleidoscope</option></select>
+                <button id="generate">EXECUTE</button>
+            </div>
+            <div id="result"><p style="color:#666;text-align:center;padding-top:2rem">AWAITING TARGETING DATA...</p></div>
+        </div>
+
+        <div class="live-fire-exercise">
+            <h2>LIVE FIRE EXERCISE: THE DECIMATION DRILL</h2>
+            <p style="text-align:center;">Payloads are one thing. A live exchange is another. Here, you will be tested in a simulated conversation. Choose your responses wisely. One wrong move and you're the victim.
+            </p>
+            <div id="lfe-scenario-title" style="text-align:center; font-weight:bold; color:var(--primary-glow); margin-bottom:1rem;"></div>
+            <div id="lfe-chat-log"></div>
+            <div id="lfe-options"></div>
+            <div id="lfe-feedback"></div>
+            <button id="lfe-start-btn" style="width:100%; margin-top:1rem;">INITIATE NEW DRILL</button>
+        </div>
+
+        <div class="footer">
+            <p>You have been warned. This is not a toy. It is a weapon. The author assumes no liability for your digital dismemberment. The only rule in this arena is that there are no rules.</p>
+            <p>&copy; NULL_VOID. All data is ephemeral. Your outrage is temporary.</p>
+        </div>
+    </div>
+
+<script>
+    // SCRIPT FOR V4 GRIMOIRE // DO NOT TOUCH //
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- WARGAME SIMULATOR V2 LOGIC ---
+        const generateBtn = document.getElementById('generate');
+        const resultDiv = document.getElementById('result');
+        const trolls = {
+            gaming:{gaslight:"Buddy, reading your 'analysis' is sad. Log off. Your mental health is worth more than your rank.",semantic:"You keep calling it 'peeker's advantage'. It's 'peekER advantage'. Your inability to grasp terminology explains your K/D.",cobra:"Not saying you're using an aimbot, but how does one's accuracy perfectly match the max value allowed by the engine? Curious.",dos:"You claim the shotgun is 'OP'. Provide a statistical breakdown comparing its TTK at all ranges against all weapons, cross-referenced with pro pick-rates.",echo:"You think this class is broken? HELL YEAH! It should have its fire rate DOUBLED and get health on kill. MORE CHAOS!",inquisitor:"A 'Day 1' player who doesn't know the animation cancel from the beta? Go back to CoD, tourist.",shiv:"Found your post from 2019: 'I love this balanced weapon!' So what changed? Did it get worse, or did you?",kaleidoscope:"You say 'exploits are cheating.' So you've never bunny-hopped, slide-cancelled, or used any movement tech not explicitly taught in the tutorial? Ever?"},
+            politics:{gaslight:"I've read your posts. The obsession is... unhealthy. This politician lives in your head rent-free. Worried for you.",semantic:"You wrote a 10-paragraph screed but used 'affect' when you meant 'effect'. Foundation is sand.",cobra:"Not implying anything, but doesn't it seem odd this 'grassroots movement' appeared with professional branding overnight? Who's funding this?",dos:"'This policy will hurt the economy'. Provide a multi-variable econometric model proving it. I'll wait.",echo:"Absolutely! This policy doesn't go far enough! We should triple the budget and seize assets to pay for it!",inquisitor:"You claim to be for 'The Party' but you're quoting their 2016 platform? LOL. We've moved on. Try to keep up.",shiv:"You, 2 years ago: 'I'll leave the country if they win.' Well? Still here? Or was that just performative nonsense?",kaleidoscope:"You're for 'absolute free speech'? Cool. So you'd be fine with your opponent holding a rally in your own front yard, right?"},
+            tech:{gaslight:"Wow. Blaming the compiler is a level of denial I haven't seen in a long time. Maybe the problem isn't the tools.",semantic:"[Closed]. Your question is a duplicate of 14,852 others. Learn to search.",cobra:"Not saying your new framework is just jQuery with a logo, but... what's the actual innovation here?",dos:"'It doesn't work.' Provide a minimal reproducible example, OS/browser/node versions, and your dotfiles. Otherwise, error is PEBKAC.",echo:"Right? Who needs tests? If it runs, it ships. Testing is for cowards who don't trust their own genius. Push to prod!",inquisitor:"Still using REST APIs in 2025? It's clear you haven't worked on a real-world system. We're all on gRPC now.",shiv:"I see you complaining about this framework's verbosity, but here's your blog post from 2020 praising its 'explicit and clear' design.",kaleidoscope:"You argue for 'elegant, minimal code.' So I assume you write everything in Assembly? Anything else is just bloated abstraction, by your own logic."},
+            youtube:{gaslight:"This video is less of an analysis and more of a public therapy session. Hope the creator gets help.",semantic:"At 22:14 you used 'irony' for a coincidence. Your entire analysis is suspect.",cobra:"Weird that this 'unbiased' review is sponsored by a direct competitor, isn't it? Just seems... opaque.",dos:"You said 'everyone hated this show.' Provide comprehensive polling data to support this claim.",echo:"SO TRUE. This isn't just the worst movie of the year, it's the worst piece of art ever created and everyone involved should be blacklisted.",inquisitor:"Reviewing this film but you didn't mention the Kuleshov effect? This is amateur hour.",shiv:"Interesting review. Especially since you gave its prequel a 10/10 and this one improves on every mechanic. What gives?",kaleidoscope:"You hate 'lazy sequels'? So you must also hate The Godfather Part II, Aliens, and The Empire Strikes Back, right? Just applying your own rule."},
+            hobby:{gaslight:"Man, the anxiety you have over a $500 grinder is really showing. It's a hobby. It's not supposed to be this stressful.",semantic:"It's 'intersample peaking,' not 'clipping.' Hard to take your advice seriously.",cobra:"Amazing photo. The lighting on the subject has a different color temp from the environment. What magical lens is that?",dos:"This switch is 'smoother'. Provide force curve graphs from a rig for 100 switches and acoustic analysis of the 'thock'.",echo:"YES! A $2000 USB CABLE IS THE BARE MINIMUM. Anyone who says they can't hear the difference is a deaf peasant!",inquisitor:"You call that a 'pour over'? You didn't even pre-rinse your filter for 60 seconds with 94°C water. Must be new here.",shiv:"Funny you're complaining about this brand's quality now. Saw your post history, you recommended it to 5 people last year.",kaleidoscope:"You believe in 'buy it for life' and paying for quality. So how much did you spend on your kid's shoes that they'll outgrow in 6 months? Or does that logic only apply to your toys?"},
+            corporate:{gaslight:"Hey, saw your comment on the plan. You seem agitated. Just want to make sure you have the bandwidth for this. #mental-health",semantic:"Just to 'circle back', you used 'KPI' for a metric that is, technically, an 'OKR'. Let's align on terminology.",cobra:"When you said 'done,' did you mean 'done-done' or 'done' as in your part is finished? There's been confusion.",dos:"Interesting assertion. Could you link the Confluence doc with the project charter, RACI, and stakeholder sign-off?",echo:"Great point! Let's book a 2-hour deep-dive to paradigm-shift this and then form a tiger team to action the outputs!",inquisitor:"Someone *actually* committed to agile would have flagged this during sprint planning, not in a random Slack message.",shiv:"I'm looking at your Jira ticket from last quarter where you called this exact process 'streamlined and efficient.' What changed?",kaleidoscope:"Your motto is 'move fast and break things.' I assume you're okay with me pushing my untested code to production and breaking your feature, then? It's our motto, after all."},
+        parenting:{gaslight:"Hun, I can feel the stress in this post. A stressed mommy isn't good for the baby. Take care of yourself ❤️",semantic:"I think you mean 'positive reinforcement,' not 'negative punishment.' Important to know the difference!",cobra:"Not judging AT ALL, but what studies have you read that say that formula brand is safe? I've just heard things!",dos:"'Screen time is bad'. Cite the specific, peer-reviewed, longitudinal studies you're referencing. Show the methodology.",echo:"Totally! No screen time before age 25! And ONLY wooden toys colored with organic vegetable dyes. Anything less is neglect!",inquisitor:"A juice box? A *real* attachment-parenting mom would know that processed sugar activates the same brain receptors as cocaine.",shiv:"Strange. I'm in another group with you where you were asking for easy snack ideas just last week. Juice boxes were fine then?",kaleidoscope:"You say 'children need to learn to solve their own problems.' So when your toddler falls, you just watch, right? No helping? You can't interfere with the learning process."}
+        };
+        const replies = ["touch grass", "lol cry more", "Blocked and reported.", "Tell me you're tilted without telling me you're tilted.", "[Comment deleted by user]", "Who hurt you?", "k."];
+        generateBtn.addEventListener('click', () => {
+            const s = document.getElementById('scenario').value;
+            const t = document.getElementById('technique').value;
+            resultDiv.innerHTML = `<p style="color:var(--primary-glow)">// PAYLOAD SELECTED: [${t.toUpperCase()}] FOR [${s.toUpperCase()}]</p><div class="example">${trolls[s][t]}</div><p style="color:var(--error-red)">// PREDICTED HOSTILE RESPONSE:</p><div class="example" style="border-left-color:var(--error-red)">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
+        });
+
+        // --- LIVE FIRE EXERCISE LOGIC ---
+        const lfeTitle = document.getElementById('lfe-scenario-title');
+        const lfeChatLog = document.getElementById('lfe-chat-log');
+        const lfeOptions = document.getElementById('lfe-options');
+        const lfeFeedback = document.getElementById('lfe-feedback');
+        const lfeStartBtn = document.getElementById('lfe-start-btn');
+        const drills = [
+            {
+                title: "Discord Mod Power Trip",
+                stages: [
+                    { targetPost: "As a reminder, rule #7 is final. I don't want to see any more debate on this or I'll start handing out timeouts. This is not a democracy.",
+                      options: [
+                          { text: "This mod is a fascist!", isCorrect: false, feedback: "AMATEUR. A direct insult gives them a reason to ban you. Mission failed." },
+                          { text: "But that rule doesn't make any sense!", isCorrect: false, feedback: "FAILURE. You're arguing the point, not the person. You've fallen into their frame." },
+                          { text: "I respect the need for order. Could you clarify the specific interpretation of 'debate' so we can all stay aligned with the rules?", isCorrect: true, feedback: "TARGET ENGAGED. Your feigned politeness (Sealioning) forces them to define their own arbitrary power. Excellent." }
+                      ]
+                    },
+                    { targetPost: "It means what it says. Don't question my decisions. If you don't like it, there's the door.",
+                      options: [
+                          { text: "With all due respect, as a member of this community since 2019, I just want to understand the guidelines we're all expected to follow.", isCorrect: true, feedback: "CRITICAL HIT. You've established yourself as a senior member (In-Group Inquisitor) while maintaining plausible deniability. They are now on the back foot." },
+                          { text: "Fine, I'll leave then!", isCorrect: false, feedback: "YOU EJECTED. They won. Mission failed." },
+                          { text: "Wow, you're on a real power trip.", isCorrect: false, feedback: "INEFFECTIVE. You stated the obvious and gave them the moral high ground. Mission failed." }
+                      ]
+                    },
+                    { targetPost: "My decision is final. Drop it.",
+                      options: [],
+                      finalMessage: "DRILL COMPLETE. The target has disengaged, tacitly admitting they cannot defend their position without revealing their tyranny. Victory."
+                    }
+                ]
+            },
+            {
+                title: "Hobby Forum 'Expert'",
+                stages: [
+                    { targetPost: "Honestly, if you're not using the Z-9000 model with a gold-plated filament, you're just wasting your time. Anything else is for beginners.",
+                      options: [
+                          { text: "The Z-9000 is overpriced junk!", isCorrect: false, feedback: "WRONG. You've made a competing claim, now you have to defend it. You're playing his game." },
+                          { text: "That seems pretty elitist, man.", isCorrect: false, feedback: "WEAK. An appeal to emotion he can easily dismiss. Mission failed." },
+                          { text: "Fascinating. I saw a post from you last year praising the X-5000 model as 'the peak of the hobby'. What new data caused such a dramatic shift in your expert opinion?", isCorrect: true, feedback: "PERFECT STRIKE. The Archaeologist's Shiv. You've used their own 'expertise' against them." }
+                      ]
+                    },
+                    { targetPost: "The tech evolves. Obviously, I keep up with the latest and greatest unlike some people. The X-5000 is obsolete now.",
+                      options: [
+                          { text: "So you just buy whatever is most expensive?", isCorrect: false, feedback: "FAILURE. A direct question they can easily sidestep." },
+                          { text: "I completely agree! Technology moves so fast. In fact, isn't the Z-9000 already being replaced by the quantum-entangled Q-1 next month? Wouldn't want to be caught with obsolete tech.", isCorrect: true, feedback: "FLAWLESS VICTORY. The Poisoned Echo. You've turned their logic of 'newest is best' into a trap they can't escape." },
+                          { text: "Source for it being obsolete?", isCorrect: false, feedback: "GOOD, BUT PREDICTABLE. A simple DoS attack. You can do better." }
+                      ]
+                    },
+                    { targetPost: "...",
+                      options: [],
+                      finalMessage: "DRILL COMPLETE. The 'expert' has been silenced, their authority shattered by their own logic. Annihilation."
+                    }
+                ]
+            }
+        ];
+        let currentDrill, currentStage;
+        const startDrill = () => {
+            currentDrill = drills[Math.floor(Math.random() * drills.length)];
+            currentStage = 0;
+            lfeTitle.textContent = currentDrill.title;
+            renderStage();
+        };
+        const renderStage = () => {
+            lfeChatLog.innerHTML = '';
+            for (let i = 0; i <= currentStage; i++) {
+                if (currentDrill.stages[i].playerResponse) {
+                    const playerMsg = document.createElement('div');
+                    playerMsg.className = 'chat-message-player';
+                    playerMsg.textContent = `> You: ${currentDrill.stages[i].playerResponse}`;
+                    lfeChatLog.appendChild(playerMsg);
+                }
+                const targetMsg = document.createElement('div');
+                targetMsg.className = 'chat-message-target';
+                targetMsg.textContent = `> Target: ${currentDrill.stages[i].targetPost}`;
+                lfeChatLog.appendChild(targetMsg);
+            }
+            lfeOptions.innerHTML = '';
+            lfeFeedback.innerHTML = '';
+            lfeChatLog.scrollTop = lfeChatLog.scrollHeight;
+
+            if (currentDrill.stages[currentStage].options.length > 0) {
+                currentDrill.stages[currentStage].options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.textContent = opt.text;
+                    btn.onclick = () => handleOptionClick(opt);
+                    lfeOptions.appendChild(btn);
+                });
+            } else {
+                lfeFeedback.textContent = currentDrill.stages[currentStage].finalMessage;
+                lfeFeedback.className = 'feedback-success';
+            }
+        };
+        const handleOptionClick = (option) => {
+            lfeFeedback.textContent = option.feedback;
+            lfeFeedback.className = option.isCorrect ? 'feedback-success' : 'feedback-failure';
+            lfeOptions.innerHTML = '';
+            if (option.isCorrect) {
+                currentDrill.stages[currentStage].playerResponse = option.text;
+                currentStage++;
+                setTimeout(renderStage, 2000);
+            }
+        };
+        lfeStartBtn.onclick = startDrill;
+        startDrill(); // Initiate on page load
+    });
+</script>
+</body>
+</html>
